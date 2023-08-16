@@ -1,0 +1,78 @@
+- git init (로컬 리포지토리 생성. 깃이 관리하는 폴더(.git)가 만들어짐)
+
+    로컬 리포지토리(git_test폴더)에 텍스트 파일(README.md)만들고 내용을 적어서 저장.
+
+
+- git status (현재 깃이 관리하고 있는 로컬 리포지토리의 상태를 보여줌)
+
+    Untracked files:
+     (use "git add <file>..." to include in what will be committed)
+        README.md
+    -> 여기서 Untracked files 라는 문구는 깃이 처음 보는 파일(README.md)이 등장했다
+
+
+- git add README.md (md파일을 스테이지에 올림)
+
+
+- git commit -m "day02 first" (현재 스테이지에 올라와 있는 md파일을 커밋)
+
+
+- git config --global user.email "inhawinter@gmail.com"
+- git config --global user.name "inhawinter"
+    초기 사용자 및 이메일 등록
+
+
+다시 커밋
+README.md을 다시 수정 후 git status 실행
+Changes not staged for commit:
+modified:   README.md (붉은색)
+
+
+- git add .
+다시 git status 실행
+Changes to be committed:
+modified:   README.md (녹색)
+
+
+- git commit -m "day02 second" (커밋하기)
+
+
+- git log (현재 커밋 상태 등을 확인)
+
+
+- git checkout f47bfac (해당 해시코드 커밋으로 이동)
+- git checkout - (최신 커밋으로 이동)
+
+
+- git remote add origin https://github.com/inhawinter/git_test.git
+원격 리포지토리를 origin으로 등록
+
+
+- git remote -v
+등록된 리포지토리 확인
+
+
+- git remote remove origin
+origin 제거
+
+- git push -u origin master (업로드)
+
+
+- git checkout "master"
+    master 브랜치로 이동
+
+
+- git reset --soft 해시코드7자리 (커밋 취소)
+
+
+- git pull origin master (GitHub에서 수정 후 가져오기, 원격 리포지토리의 커밋이 로컬 리포지토리의 커밋보다 앞서 있을 때 로컬로 다운로드하고 log 업데이트)
+
+
+- git clone https://github.com/inhawinter/py.git . (원격 리포지토리를 복제 다운로드. 클론 명령에는 git init 그리고 git pull 등이 기본을 실행)
+
+
+- git restore day03.py (수정된 내용에서 이전 커밋으로 복구 day03.py)
+
+- git restore --staged day14_pokemonGame.py (깃 add .로 스테이지에 올린 파일 내리기)
+
+- Q (git log 확인후 빠져나올때)
