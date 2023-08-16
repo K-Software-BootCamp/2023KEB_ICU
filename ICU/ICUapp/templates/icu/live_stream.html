@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-3">
+    <h2 class="border-bottom my-3 py-2">I CU project</h2>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="border mb-4">
+                <video id="videoElement" autoplay></video>
+                <script src="{% static 'js/live_alert.js' %}" type="module"></script>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="border p-3">
+                <h5>시간</h5>
+                <p id="time">시간표시</p>
+                <h5>장소</h5>
+                <p id="location">편의점 위치 기입</p>
+            </div>
+            <div class="border p-3 mt-3">
+                <h5>알림창</h5>
+                <div id="notification">
+                    알림 내용이 여기에 나타납니다.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

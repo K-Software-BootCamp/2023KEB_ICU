@@ -1,0 +1,23 @@
+{% load static %}
+
+#videoElement {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+}
+
+#time,
+#location {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+#notification-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 300px;
+}
+
+
+
