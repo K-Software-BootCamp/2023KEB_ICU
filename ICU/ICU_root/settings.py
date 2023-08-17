@@ -13,8 +13,17 @@ SECRET_KEY = "django-insecure-in3mrveh0gx@vds(56g82bhx(gn_tiepd%i%(-tg-2c#2*o#mn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+CORS_ORIGIN_ALLOW_ALL = True
 
+# CORS_ORIGIN_ALLOW_ALL = False
+# CORS_ALLOWED_ORIGINS = [
+#     "https://example.com",
+#     "https://sub.example.com",
+#     "http://localhost:8000",
+#     "http://127.0.0.1:9000",
+# ]
+
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -25,6 +34,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'corsheaders',
     "channels",
     "ICUapp",
 ]
@@ -41,12 +51,14 @@ CHANNEL_LAYERS = {
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
 
 ROOT_URLCONF = "ICU_root.urls"
 
@@ -130,3 +142,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'YOUR_EMAIL'
 EMAIL_HOST_PASSWORD = 'YOUR_PASSWORD'
+

@@ -1,15 +1,14 @@
-from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
-from django.urls import re_path
-from ICU.ICUapp import consumers
+from django.urls import path, re_path
+from ICU.ICU_root import consumers
+from ICU.ICU_root.cors_middleware import CorsMiddleware
 
-# websocket - server path
 websocket_urlpatterns = [
-    re_path(r'alerts/$', consumers.AlertConsumer),
+    path('alerts/', consumers.AlertConsumer.as_asgi()),
 ]
 
 application = ProtocolTypeRouter({
-    "websocket": AuthMiddlewareStack(
+    "websocket": CorsMiddleware(
         URLRouter(
             websocket_urlpatterns
         )

@@ -5,7 +5,7 @@ from ultralytics import YOLO
 
 # 모델 초기화
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-model = YOLO("/Users/hui-ryung/Desktop/Project/KEB_ICU/ICU/ai_server/models")  # 파일 경로
+model = YOLO("/Users/hui-ryung/Desktop/Project/KEB_ICU/ICU/ai_server/models/best_custom.pt")  # 파일 경로
 
 
 # 프레임 처리
@@ -18,5 +18,7 @@ def process_frame(frame):
     labels = [f"{classes[class_id]} {confidence:0.2f}" for _, _, confidence, class_id, _ in high_confidence_detections]
     img = frame
     img = box_annotator.annotate(scene=img, detections=high_confidence_detections, labels=labels)
+    if img is None:
+        print("Image is None")
     small_img = cv2.resize(img, dsize=(0, 0), fx=0.5, fy=0.5, interpolation=cv2.INTER_LINEAR)
     return small_img
