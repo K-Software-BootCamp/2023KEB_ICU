@@ -2,6 +2,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ICU_root.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ICU_Config.settings")
 
 application = get_wsgi_application()

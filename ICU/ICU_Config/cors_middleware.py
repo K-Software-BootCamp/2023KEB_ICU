@@ -1,3 +1,8 @@
+'''
+CORS(Cross-Origin Resource Sharing) 미들웨어 관련 설정
+브라우저에서 다른 출처의 웹 페이지로 리소스 요청할 수 있도록(현재 전체 허용 상태)
+'''
+
 class CorsMiddleware:
     def __init__(self, inner):
         self.inner = inner

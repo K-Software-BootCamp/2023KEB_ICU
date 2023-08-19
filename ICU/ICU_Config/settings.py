@@ -1,5 +1,10 @@
 from pathlib import Path
 
+'''
+프로젝트 주요 설정 파일
+DB, Installed App 목록, Middle Ware 설정
+'''
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,7 +28,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 #     "http://127.0.0.1:9000",
 # ]
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*']  # 모든 호스트 허용
 
 # Application definition
 
@@ -36,7 +41,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'corsheaders',
     "channels",
-    "ICUapp",
+    "channels_redis",
+    "ICU_App",
 ]
 
 CHANNEL_LAYERS = {
@@ -57,10 +63,11 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "channels.middleware.ProtocolTypeRouter",
 ]
 
 
-ROOT_URLCONF = "ICU_root.urls"
+ROOT_URLCONF = "ICU_Config.urls"
 
 TEMPLATES = [
     {
@@ -78,8 +85,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "ICU_root.wsgi.application"
-ASGI_APPLICATION = "ICU_root.routing.application"
+WSGI_APPLICATION = "ICU_Config.wsgi.application"
+ASGI_APPLICATION = "ICU_Config.routing.application"
 
 
 # Database
@@ -111,6 +118,35 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# 파일 업로드 관련 설정
+FILE_UPLOAD_MAX_MEMORY_SIZE = 80242880  # 80MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 80485760  # 80MB, request body size
+
+FILE_UPLOAD_HANDLERS = [
+    "django.core.files.uploadhandler.MemoryFileUploadHandler",
+    "django.core.files.uploadhandler.TemporaryFileUploadHandler",
+]
+
+LOGGING = {  # 장고 로깅 활성화
+    'version': 1,
+    'disable_existing_loggers': False,
+    # 로그 메시지 처리하는 방법 정의
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',  # 로그 기록
+        },
+    },
+    # 로거 특정 행동 정의
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',  # 파일 기록
+            'propagate': True,
+        },
+    },
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -128,7 +164,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "ICUapp/static"]
+STATICFILES_DIRS = [BASE_DIR / "ICU_App/static"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

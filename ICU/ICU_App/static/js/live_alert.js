@@ -2,7 +2,7 @@
 // client
 document.addEventListener("DOMContentLoaded", function() {
 
-const socket = new WebSocket('ws://127.0.0.1:8000/alerts/');
+const socket = new WebSocket('ws://127.0.0.1:8003/alerts/');
 
 socket.onmessage = function(event) {
     const data = JSON.parse(event.data);
