@@ -2,17 +2,16 @@ from django.urls import path, re_path
 from . import views
 from . import consumers
 
-
 '''
-URL 라우팅 관련 설정
+views, consumers URL 연결
 '''
 
 urlpatterns = [
-    path('', views.main, name='live_feed'),
+    path('', views.main, name='main'),
 ]
 
 websocket_urlpatterns = [
     re_path(r'^AIserver_ws/$', consumers.AIServerConsumer.as_asgi()),
     re_path(r'^WEBserver_ws/$', consumers.WebServerConsumer.as_asgi()),
-    re_path(r'^BROWSERserver_ws/$', consumers.BrowserConsumer.as_asgi()),
+    re_path(r'^VideoStreaming_ws/$', consumers.WebRTCConsumer.as_asgi()),
 ]

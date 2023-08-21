@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     "channels_redis",
     "ICU_App",
     'AI_Server',
-    'Local_Environment',
 ]
 ASGI_APPLICATION = "ICU_Config.asgi.application"
 

@@ -13,11 +13,11 @@ from PIL import Image
 
 '''
     AI Server
-    1) 로컬환경으로부터 웹캠 수신
-    2) 이상행동 탐지시 웹서버와 로컬환경으로 알림 전송
+    1) 웹캠 또는 저장된 영상 수신
+    2) 이상행동 탐지시 웹서버로 알림 전송
 '''
 
-AI_SERVER_URL = "ws://127.0.0.1:8001/AIserver_ws/"
+AI_SERVER_URL = "ws://127.0.0.1:8000/AIserver_ws/"
 
 
 # 이미지를 모델로 분석 후 결과 반환
