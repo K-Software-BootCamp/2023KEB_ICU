@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 '''
 프로젝트 주요 설정 파일
@@ -27,6 +28,12 @@ CORS_ORIGIN_ALLOW_ALL = True
 #     "http://localhost:8000",
 #     "http://127.0.0.1:9000",
 # ]
+STATIC_ROOT = '/Users/hui-ryung/Desktop/Project/KEB_ICU/ICU/ICU_App/static'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    BASE_DIR / 'ICU_App' / 'static' / 'js',
+    BASE_DIR / 'ICU_App' / 'static' / 'css',
+)
 
 ALLOWED_HOSTS = ['*']  # 모든 호스트 허용
 
@@ -43,7 +50,10 @@ INSTALLED_APPS = [
     "channels",
     "channels_redis",
     "ICU_App",
+    'AI_Server',
+    'Local_Environment',
 ]
+ASGI_APPLICATION = "ICU_Config.asgi.application"
 
 CHANNEL_LAYERS = {
     'default': {
@@ -63,9 +73,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "channels.middleware.ProtocolTypeRouter",
 ]
-
 
 ROOT_URLCONF = "ICU_Config.urls"
 
@@ -86,7 +94,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "ICU_Config.wsgi.application"
-ASGI_APPLICATION = "ICU_Config.routing.application"
 
 
 # Database
@@ -163,8 +170,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "ICU_App/static"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

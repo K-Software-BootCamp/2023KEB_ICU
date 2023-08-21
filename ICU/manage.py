@@ -9,6 +9,8 @@ def main():
     """Run administrative tasks."""
     current_directory = os.path.dirname(os.path.abspath(__file__))
     sys.path.append(os.path.join(current_directory, "AI_Server"))
+    sys.path.append(os.path.join(current_directory, "ICU_App"))
+    sys.path.append(os.path.join(current_directory, "ICU"))
     sys.path.append(os.path.join(current_directory, "Local_Environment"))
 
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ICU_Config.settings')

@@ -44,7 +44,7 @@ def detect_anomaly(result):
 
 # 웹 서버에 알림을 전송
 def notify_web_server(detected_class):
-    url = "YOUR_WEB_SERVER_URL/notify"
+    url = "WEB_SERVER_URL/notify"
     data = {"message": f"Anomaly Detected! Object: {detected_class}"}
     response = requests.post(url, data=data)
     if response.status_code != 200:
@@ -54,7 +54,7 @@ def notify_web_server(detected_class):
 
 # Local_Environment에 알림을 전송
 def notify_local_environment(detected_class):
-    url = "YOUR_LOCAL_ENVIRONMENT_URL/notify"
+    url = "LOCAL_ENVIRONMENT_URL/notify"
     data = {"message": f"Anomaly Detected! Object: {detected_class}"}
     response = requests.post(url, data=data)
     if response.status_code != 200:

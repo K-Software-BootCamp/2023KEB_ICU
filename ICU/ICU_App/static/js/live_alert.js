@@ -1,19 +1,62 @@
-// WebSocket 연결 시작
-// client
-document.addEventListener("DOMContentLoaded", function() {
+let aiSocket;
+let webSocket;
+let videoElement = document.getElementById('videoElement');
 
-const socket = new WebSocket('ws://127.0.0.1:8003/alerts/');
-
-socket.onmessage = function(event) {
-    const data = JSON.parse(event.data);
-    if (data.message === "Anomaly detected!") {
-        showNotification("Anomaly detected! Please check the CCTV.");
-    }
+const connectAI = () => {
+    aiSocket = new WebSocket('ws://127.0.0.1:8000/AIserver_ws/');
+    
+    aiSocket.onmessage = function(event) {
+        try {
+            const data = JSON.parse(event.data);
+            if (data.message === "Anomaly detected!") {
+                showNotification("Anomaly detected! Please check the CCTV.");
+            }
+            if (data['alert'] === true) {
+                videoElement.src = data['alert_stream'];
+            } else {
+                videoElement.src = "{% url 'live_feed' %}";
+            }
+        } catch(err) {
+            console.error("Received invalid data:", event.data);
+        }
+    };
+    
+    aiSocket.onclose = function(event) {
+        console.error('AI Socket closed unexpectedly. Reconnecting...');
+        setTimeout(connectAI, 1000);
+    };
 };
-});
 
-socket.onclose = function(event) {
-    console.error('WebSocket closed', event);
+const connectWeb = () => {
+    webSocket = new WebSocket('ws://127.0.0.1:8000/WEBserver_ws/');
+
+    webSocket.onmessage = function(event) {
+        let data = JSON.parse(event.data);
+        if (data.hasOwnProperty('stream')) {
+        videoElement.src = data['stream'];
+    }
+    };
+
+    webSocket.onclose = function(event) {
+        console.error('Web Socket closed unexpectedly. Reconnecting...');
+        setTimeout(connectWeb, 1000);
+    };
+};
+
+const connectBrowser = () => {
+    let browserSocket = new WebSocket('ws://127.0.0.1:8000/BROWSERserver_ws/');
+
+    browserSocket.onmessage = function(event) {
+        let frameData = event.data;
+        let blob = new Blob([frameData], { type: 'image/jpeg' });
+        let imageUrl = URL.createObjectURL(blob);
+        videoElement.src = imageUrl;
+    };
+
+    browserSocket.onclose = function(event) {
+        console.error('Browser Socket closed unexpectedly. Reconnecting...');
+        setTimeout(connectBrowser, 1000);
+    };
 };
 
 
@@ -34,7 +77,6 @@ function closeNotification(buttonElement) {
     document.body.removeChild(notification);
 }
 
-
 // 현재 시간 표시
 function updateCurrentTime() {
     const timeElement = document.getElementById("time");
@@ -46,14 +88,8 @@ function updateCurrentTime() {
 // 1초마다 시간 업데이트
 setInterval(updateCurrentTime, 1000);
 
-// // 서버에 알림 정보 요청, 반환 메시지로 알림창 표시 -> 웹소켓 방식 우선 사용
-// function getNotification() {
-//     fetch('/notify/')
-//     .then(response => response.json())
-//     .then(data => {
-//         if (data.message) {
-//             showNotification(data.message);
-//         }
-//     })
-//     .catch(error => console.error('Error:', error));
-// }
+// 초기 연결 시도
+connectAI();
+connectWeb();
+connectBrowser();
+
